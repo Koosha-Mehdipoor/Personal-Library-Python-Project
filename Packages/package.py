@@ -1,7 +1,5 @@
 
-
 book_list = []
-
 def menu():
     text_menu = ("For adding a book to the list enter a:\n"
         "For reading info about a boook enter r:\n"
@@ -20,7 +18,9 @@ def menu():
         print("The command is wrong try another time.")
         menu()
 
-    
+
+
+
 def add_book():
     print("we entered to the add book function")
     name = input("please enter the name of the book: ")
@@ -54,7 +54,6 @@ def read_book():
                 break
 
 
-
 def delete_book():
     books_to_remove = []
     print("we entered to the delete funtion")
@@ -71,5 +70,3 @@ def delete_book():
     for book in books_to_remove:
         book_list.remove(book)
     print("Updated book list: ", book_list)
-
-menu()
