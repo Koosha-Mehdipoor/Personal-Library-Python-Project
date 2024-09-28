@@ -53,6 +53,15 @@ def read_book():
 
 def delete_book():
     print("we entered to the delete funtion")
-
+    name = input("please enter the name fo the book that you want to remove from the list: ")
+    for index in range(len(book_list)):
+        for key in book_list[index]:
+            if book_list[index][key] == name:
+                book_list.remove(book_list[index])
+                print(f"The book {name} is removed from the list")
+                print(book_list)
+                break
+            else:
+                print("The book does not exist in your list")
 
 menu()
