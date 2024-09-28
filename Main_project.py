@@ -1,6 +1,7 @@
 text_menu = ("For adding a book to the list enter a:\n"
         "For reading info about a boook enter r:\n"
-        "For deleting a book from the list enter d:\n")
+        "For deleting a book from the list enter d:\n"
+        "For exiting from the program enter q:")
 
 book_list = []
 
@@ -12,9 +13,11 @@ def menu():
         read_book()
     elif user_input == "d":
         delete_book()
+    elif user_input == "q":
+        print("a presto!")
     else:
         print("The command is wrong try another time.")
-
+        menu()
 
     
 def add_book():
