@@ -1,5 +1,5 @@
 import json
-import sqlite3
+
 
 def load_data():
     try:
@@ -7,24 +7,7 @@ def load_data():
             json.load(content)
     except FileNotFoundError:
         return[]
-
-def create_table():
-     connection = sqlite3.connect('/Users/koosha.mehdipoor@igenius.ai/Documents/Book_management.db')
-     cursor = connection.cursor()
-
-     cursor.execute("DROP TABLE IF EXISTS BOOKS")
-
-     create_replace_table = """ CREATE TABLE BOOKS (
-            Id VARCHAR(255) NOT NULL,
-            NAME CHAR(25) NOT NULL,
-            AUTHOR CHAR(25),
-            YEAR INT
-     ); """
-    
-     cursor.execute(create_replace_table)
-     connection.commit()
-     connection.close()
-            
+        
 
 def write_data(dictionary):
     book_list = load_data
@@ -55,7 +38,6 @@ def menu():
     else:
         print("The command is wrong try again.")
         menu()
-
 
 
 
