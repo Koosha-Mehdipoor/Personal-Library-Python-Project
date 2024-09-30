@@ -63,7 +63,7 @@ def read_book():
         name = input("please enter the name of the book you are looking for: ")
         connection = sqlite3.connect('BOOKS.db')
         cursor = connection.cursor()
-        cursor.execute(f"SELECT * FORM BOOKS WHERE name ={name};")
+        cursor.execute(f"SELECT * FROM BOOKS WHERE name ='{name}';")
         book_list = [{'name': row[0], 'author': row[1], 'year': row[2]} for row in cursor.fetchall]
         connection.commit()
         connection.close()
@@ -86,15 +86,19 @@ def read_book():
 def delete_book():
     name = input("Please enter the name of the book: ")
     author = input("Please enter the name of the author: ")
-    double_check_with_user
-    connection = sqlite3.connect('BOOKS.db')
-    cursor = connection.cursor()
-    cursor.execute(f"DELETE * FORM BOOKS WHERE name ={name} AND author ={author};")
+    if double_check_with_user() == True:
+        connection = sqlite3.connect('BOOKS.db')
+        cursor = connection.cursor()
+        cursor.execute(f'DELETE FROM BOOKS WHERE name = "{name}" AND author = "{author}";')
+        connection.commit()
+        print("Committed")
+        connection.close()
+
 
 
 def double_check_with_user():
     confirm = input("Are you sure you want to delete the item? (y/n)")
     if confirm == 'y':
-        pass
+        return True
     else:
         menu
