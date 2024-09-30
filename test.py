@@ -1,5 +1,5 @@
 import utils.JSON_package as p
+import utils.SQLite_package as s
 
-p.create_table()
-
+s.menu()
 
