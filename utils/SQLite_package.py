@@ -41,7 +41,7 @@ def add_book():
     year = input("please enter the year of its publications: ")
     connection = sqlite3.connect('BOOKS.db',timeout=10.0)
     cursor = connection.cursor()
-    cursor.execute(f'INSERT INTO BOOKS VALUES ("{name}","{author}",{year})')
+    cursor.execute('INSERT INTO BOOKS VALUES (?,?,?)', (name,author,year))
     connection.commit()
     connection.close()
     user_request()
