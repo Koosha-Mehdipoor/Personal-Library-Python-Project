@@ -34,16 +34,6 @@ def create_table():
      connection.close()
 
 
-def load_data_database():
-    connection = sqlite3.connect('BOOKS.db')
-    cursor = connection.cursor()
-
-    cursor.execute("SELECT * FROM BOOKS;")
-    book_list = [{'name': row[0], 'author': row[1], 'year': row[2]} for row in cursor.fetchall]
-    connection.close()
-    return book_list
-
-
 def add_book():
     print("we entered to the add book function")
     name = input("please enter the name of the book: ")
@@ -54,30 +44,40 @@ def add_book():
     cursor.execute(f'INSERT INTO BOOKS VALUES ("{name}","{author}",{year})')
     connection.commit()
     connection.close()
+    user_request()
 
 
 def read_book():
-    identifier = input("If you want to search the database by book name enter name or for searching by author write author ")
+    identifier = input(("Please choose one the avialble options: name, author or all: "))
     if identifier == 'name':
 
         name = input("please enter the name of the book you are looking for: ")
         connection = sqlite3.connect('BOOKS.db')
         cursor = connection.cursor()
         cursor.execute(f"SELECT * FROM BOOKS WHERE name ='{name}';")
-        book_list = [{'name': row[0], 'author': row[1], 'year': row[2]} for row in cursor.fetchall]
         connection.commit()
+        print(cursor.fetchone())
         connection.close()
-        return book_list
+        user_request()
     
     elif identifier == 'author':
         author = input("please enter the name of the author you are looking for: ")
         connection = sqlite3.connect('BOOKS.db')
         cursor = connection.cursor()
-        cursor.execute(f"SELECT * FORM BOOKS WHERE author ={author};")
-        book_list = [{'name': row[0], 'author': row[1], 'year': row[2]} for row in cursor.fetchall]
+        cursor.execute(f"SELECT * FROM BOOKS WHERE author ='{author}';")
         connection.commit()
+        print(cursor.fetchone())
         connection.close()
-        return book_list
+        user_request()
+
+    elif identifier == 'all':
+        connection = sqlite3.connect('BOOKS.db')
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM BOOKS;")
+        connection.commit()
+        print(cursor.fetchall())
+        connection.close()
+        user_request()
     else:
         print("The command is wrong try again.")
         menu()       
@@ -93,6 +93,7 @@ def delete_book():
         connection.commit()
         print("Committed")
         connection.close()
+        user_request()
 
 
 
@@ -101,4 +102,16 @@ def double_check_with_user():
     if confirm == 'y':
         return True
     else:
-        menu
+        menu()
+
+
+def user_request():
+    request = input("Do you have any other request? (y/n)")
+    if (request == "y") or (request == "yes"):
+        menu()
+    elif (request == 'n') or (request == 'no'):
+        print("a presto!")
+    else:
+        print("Command is wrong please choose from the existing options")
+        user_request()
+
