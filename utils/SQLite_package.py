@@ -1,7 +1,7 @@
 import sqlite3
 
 def menu():
-    create_table
+    create_table()
     text_menu = ("For adding a book to the list enter a:\n"
         "For reading info about a boook enter r:\n"
         "For deleting a book from the list enter d:\n"
@@ -54,7 +54,7 @@ def read_book():
         name = input("please enter the name of the book you are looking for: ")
         connection = sqlite3.connect('BOOKS.db')
         cursor = connection.cursor()
-        cursor.execute(f"SELECT * FROM BOOKS WHERE name ='{name}';")
+        cursor.execute('SELECT * FROM BOOKS WHERE name = ?;',(name,))
         connection.commit()
         print(cursor.fetchone())
         connection.close()
@@ -64,7 +64,7 @@ def read_book():
         author = input("please enter the name of the author you are looking for: ")
         connection = sqlite3.connect('BOOKS.db')
         cursor = connection.cursor()
-        cursor.execute(f"SELECT * FROM BOOKS WHERE author ='{author}';")
+        cursor.execute(f"SELECT * FROM BOOKS WHERE author =?;",(author,))
         connection.commit()
         print(cursor.fetchone())
         connection.close()
@@ -89,7 +89,7 @@ def delete_book():
     if double_check_with_user() == True:
         connection = sqlite3.connect('BOOKS.db')
         cursor = connection.cursor()
-        cursor.execute(f'DELETE FROM BOOKS WHERE name = "{name}" AND author = "{author}";')
+        cursor.execute(f'DELETE FROM BOOKS WHERE name = ? AND author = ?;',(name,author))
         connection.commit()
         print("Committed")
         connection.close()
