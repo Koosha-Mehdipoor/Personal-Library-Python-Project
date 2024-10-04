@@ -31,43 +31,27 @@ def create_table():
         cursor.execute(create_replace_table)
 
 
-def add_book():
-    print("we entered to the add book function")
-    name = input("please enter the name of the book: ")
-    author = input("please enter the name of the author: ")
-    year = input("please enter the year of its publications: ")
+def add_book(name,author,year):
+
     with DatabaseConnection('BOOKS.db') as connection:
         cursor = connection.cursor()
         cursor.execute('INSERT INTO BOOKS VALUES (?,?,?)', (name,author,year))
     user_request()
 
 
-def read_book():
-    identifier = input(("Please choose one the avialble options: name, author or all: "))
+def read_book(identifier,condition):
     with DatabaseConnection('BOOKS.db') as connection:
-        if identifier == 'name':
-
-            name = input("please enter the name of the book you are looking for: ")
             cursor = connection.cursor()
-            cursor.execute('SELECT * FROM BOOKS WHERE name = ?;',(name,))
+            cursor.execute(f'SELECT * FROM BOOKS WHERE {identifier} = ?;',(condition,))
             print(cursor.fetchone())
-            user_request()
+    user_request()
 
-        elif identifier == 'author':
-            author = input("please enter the name of the author you are looking for: ")
+def read_all_books(identifier,condition):
+    with DatabaseConnection('BOOKS.db') as connection:
             cursor = connection.cursor()
-            cursor.execute(f"SELECT * FROM BOOKS WHERE author =?;",(author,))
-            print(cursor.fetchone())
-            user_request()
-
-        elif identifier == 'all':
-            cursor = connection.cursor()
-            cursor.execute(f"SELECT * FROM BOOKS;")
+            cursor.execute('SELECT * FROM BOOKS WHERE ? = ?;',(identifier,condition,))
             print(cursor.fetchall())
-            user_request()
-        else:
-            print("The command is wrong try again.")
-            menu()       
+    user_request()
 
 
 def delete_book():
