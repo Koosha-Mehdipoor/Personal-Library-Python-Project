@@ -1,9 +1,14 @@
 
 import utils.SQLite_package as s
 
-user_prompt = ("For adding a book to the list enter a:\n"
+user_prompt = (
+    "\n"
+    "For adding a book to the list enter a:\n"
+               "\n"
         "For reading info about a boook enter r:\n"
+                "\n"
         "For deleting a book from the list enter d:\n"
+                "\n"
         "For exiting from the program enter q:")
 
 def menu():
@@ -14,7 +19,7 @@ def menu():
     elif user_input == "r":
         prompt_read_book()
     elif user_input == "d":
-        s.delete_book()
+        prompt_delete_book()
     elif user_input == "q":
         print("a presto!")
     else:
@@ -31,9 +36,14 @@ def user_request():
         print("Command is wrong please choose from the existing options")
         user_request()
 
+def double_check_with_user():
+    confirm = input("Are you sure you want to delete the item? (y/n)")
+    if confirm == 'y':
+        return True
+    else:
+        menu()
 
 def prompt_add_book():
-    print("we entered to the add book function")
     name = input("please enter the name of the book: ")
     author = input("please enter the name of the author: ")
     year = input("please enter the year of its publications: ")
@@ -58,5 +68,13 @@ def prompt_read_book():
         prompt_read_book()
 
 
-
+def prompt_delete_book():
+    name = input("Please enter the name of the book: ")
+    author = input("Please enter the name of the author: ")
+    confirm = input("Are you sure you want to delete the item? (y/n)")
+    if confirm == 'y' or confirm == 'yes':
+        s.delete_book(name,author)
+        user_request()
+    else:
+        menu()
 menu()

@@ -35,22 +35,8 @@ def read_all_books(identifier,condition):
 
 
 
-def delete_book():
-    name = input("Please enter the name of the book: ")
-    author = input("Please enter the name of the author: ")
+def delete_book(name,author):
     with DatabaseConnection('BOOKS.db') as connection:
-        if double_check_with_user() == True:
-            cursor = connection.cursor()
-            cursor.execute('DELETE FROM BOOKS WHERE name = ? AND author = ?;',(name,author))
-            print("The book is removed from database")
-    user_request()
-
-
-
-def double_check_with_user():
-    confirm = input("Are you sure you want to delete the item? (y/n)")
-    if confirm == 'y':
-        return True
-    else:
-        menu()
-
+        cursor = connection.cursor()
+        cursor.execute('DELETE FROM BOOKS WHERE name = ? AND author = ?;',(name,author,))
+    print("The book is removed from database")
