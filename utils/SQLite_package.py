@@ -1,23 +1,4 @@
 from .database_connection import DatabaseConnection
-def menu():
-    create_table()
-    text_menu = ("For adding a book to the list enter a:\n"
-        "For reading info about a boook enter r:\n"
-        "For deleting a book from the list enter d:\n"
-        "For exiting from the program enter q:")
-    user_input = input(text_menu)
-    if user_input == "a":
-        add_book()
-    elif user_input == "r":
-        read_book()
-    elif user_input == "d":
-        delete_book()
-    elif user_input == "q":
-        print("a presto!")
-    else:
-        print("The command is wrong try again.")
-        menu()
-
 
 def create_table():
      with DatabaseConnection('BOOKS.db') as connection:
@@ -36,7 +17,7 @@ def add_book(name,author,year):
     with DatabaseConnection('BOOKS.db') as connection:
         cursor = connection.cursor()
         cursor.execute('INSERT INTO BOOKS VALUES (?,?,?)', (name,author,year))
-    user_request()
+
 
 
 def read_book(identifier,condition):
@@ -44,14 +25,14 @@ def read_book(identifier,condition):
             cursor = connection.cursor()
             cursor.execute(f'SELECT * FROM BOOKS WHERE {identifier} = ?;',(condition,))
             print(cursor.fetchone())
-    user_request()
+
 
 def read_all_books(identifier,condition):
     with DatabaseConnection('BOOKS.db') as connection:
             cursor = connection.cursor()
             cursor.execute('SELECT * FROM BOOKS WHERE ? = ?;',(identifier,condition,))
             print(cursor.fetchall())
-    user_request()
+
 
 
 def delete_book():
@@ -73,15 +54,3 @@ def double_check_with_user():
     else:
         menu()
 
-
-def user_request():
-    request = input("Do you have any other request? (y/n)")
-    if (request == "y") or (request == "yes"):
-        menu()
-    elif (request == 'n') or (request == 'no'):
-        print("a presto!")
-    else:
-        print("Command is wrong please choose from the existing options")
-        user_request()
-
-#menu()
