@@ -47,7 +47,10 @@ def prompt_add_book():
     name = input("please enter the name of the book: ")
     author = input("please enter the name of the author: ")
     year = input("please enter the year of its publications: ")
-    s.add_book(name,author,year)
+    if s.read_book("name",name) == None:
+        s.add_book(name,author,year)
+    else:
+        print(f"The book {name} already exists in database.")
     user_request()
 
 def prompt_read_book():
