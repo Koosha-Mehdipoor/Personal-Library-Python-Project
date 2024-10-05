@@ -1,5 +1,5 @@
 
-import utils.SQLite_package as s
+import utils.SQLite_database as s
 
 user_prompt = (
     "\n"
